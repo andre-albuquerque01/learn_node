@@ -1,0 +1,43 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended" // Regras recomendadas para TypeScript
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "semi": ["error", "never"], // Desabilita o uso de ponto e vírgula
+      "quotes": [
+        "error",
+        "single",
+        {
+          "allowTemplateLiterals": true,
+          "avoidEscape": true
+        }
+      ], // Utiliza aspas simples, exceto quando são necessárias aspas duplas
+      "indent": ["error", "tab"], // Usa tabulação em vez de espaços
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }], // Limita linhas vazias consecutivas
+      "no-trailing-spaces": "error", // Remove espaços no final das linhas
+      "eol-last": ["error", "always"], // Garante uma linha em branco no final do arquivo
+      "space-before-function-paren": ["error", "never"], // Não permite espaço antes dos parênteses em definições de funções
+      "object-curly-spacing": ["error", "always"], // Espaço entre chaves em objetos
+      "array-bracket-spacing": ["error", "never"], // Não permite espaços dentro dos colchetes de arrays
+      
+      // Regras específicas para TypeScript
+      "@typescript-eslint/no-unused-vars": ["error"], // Evita variáveis não utilizadas
+      "@typescript-eslint/explicit-module-boundary-types": "off", // Desativa a necessidade de definir tipos de retorno explícitos nas funções
+      "@typescript-eslint/no-explicit-any": "off" // Permite o uso do tipo 'any'
+    }
+  }
+  
