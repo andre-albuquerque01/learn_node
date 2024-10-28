@@ -4,6 +4,7 @@ import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questio
 import { makeQuestion } from 'test/factories/make-question'
 import { DeleteQuestionUseCase } from './delete-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowError } from './error/not-allow-error'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: DeleteQuestionUseCase
@@ -38,20 +39,13 @@ describe('Delete question', () => {
         }, new UniqueEntityID('1'))
 
         await inMemoryQuestionsRepository.create(newQuestion)
-
-        expect(() => {
-            return sut.execute({
-                questionId: '1',
-                authorId: '2',
-            })
-        }).rejects.toThrow('Unauthorized to delete this question')
         
-        expect(() => {
-            return sut.execute({
-                questionId: '1',
-                authorId: '2',
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await sut.execute({
+            questionId: '1',
+            authorId: '2',
+        })
 
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(NotAllowError)
     })
 })
