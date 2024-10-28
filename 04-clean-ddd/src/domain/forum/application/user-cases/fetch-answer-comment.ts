@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Either, right } from "@/core/either"
 import { AnswerComment } from "../../enterprise/entities/answer-comment"
 import { AnswerCommentsRepository } from "../repositories/answer-comments-repository"
 
@@ -7,9 +8,9 @@ interface FetchAnswerCommentsUseCaseRequest {
   page: number
 }
 
-interface FetchAnswerCommentsUseCaseResponse {
+type FetchAnswerCommentsUseCaseResponse = Either<null, {
   answerComment: AnswerComment[]
-}
+}>
 
 export class FetchAnswerCommentsUseCase {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -23,6 +24,6 @@ export class FetchAnswerCommentsUseCase {
       { page },
     )
 
-    return { answerComment }
+    return right({ answerComment })
   }
 }
