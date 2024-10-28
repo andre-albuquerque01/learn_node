@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
+import { Either, left, right } from '@/core/either'
 import { Answer } from '../../enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
+import { ResourceNotFoundError } from './error/resource-not-found-error'
+import { NotAllowError } from './error/not-allow-error'
 
 interface EditAnswerUseCaseRequest {
   authorId: string
@@ -8,12 +11,12 @@ interface EditAnswerUseCaseRequest {
   content: string
 }
 
-interface EditAnswerUseCaseResponse {
-    answer: Answer
-}
+type EditAnswerUseCaseResponse = Either<ResourceNotFoundError | NotAllowError, {
+  answer: Answer
+}>
 
 export class EditAnswerUseCase {
-  constructor(private answerRepository: AnswersRepository) {}
+  constructor(private answerRepository: AnswersRepository) { }
 
   async execute({
     authorId,
@@ -23,17 +26,17 @@ export class EditAnswerUseCase {
     const answer = await this.answerRepository.findById(questionId)
 
     if (!answer) {
-      throw new Error('Answer not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (authorId !== answer.authorId.toString()) {
-      throw new Error('Unauthorized to edit this answer')
+      return left(new NotAllowError())
     }
 
     answer.content = content
 
     await this.answerRepository.save(answer)
 
-    return { answer }
+    return right({ answer })
   }
 }
