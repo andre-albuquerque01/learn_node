@@ -1,6 +1,6 @@
 import { UniqueEntityID } from './unique-entity-id'
 
-export class Entity<Props> {
+export abstract class Entity<Props> {
   private _id: UniqueEntityID
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected props: any
