@@ -6,6 +6,7 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { ChooseQuestionBestAnswerUseCase } from './choose-questin-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
+import { NotAllowError } from './error/not-allow-error'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryAnswerRepository: InMemoryAnswersRepository
@@ -53,19 +54,13 @@ describe('Choose question best answer', () => {
             authorId: newQuestion.authorId.toString(),
         })
 
-        expect(() => {
-            return sut.execute({
-                answerId: newAnswer.id.toString(),
-                authorId: '2',
-            })
-        }).rejects.toThrow('Unauthorized to choose this answer as best')
+        const result = await sut.execute({
+            answerId: newAnswer.id.toString(),
+            authorId: '2',
+        })
         
-        expect(() => {
-            return sut.execute({
-                answerId: newAnswer.id.toString(),
-                authorId: '2',
-            })
-        }).rejects.toBeInstanceOf(Error)
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(NotAllowError)
 
     })
 })
