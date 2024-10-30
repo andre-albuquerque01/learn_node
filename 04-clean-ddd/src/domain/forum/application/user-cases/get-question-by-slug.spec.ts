@@ -4,13 +4,16 @@ import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questio
 import { GetQuestionBySlugUseCase } from './get-question-by-slug'
 import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
+import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-questions-attachment-repository'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryQuestionsAttachmentRepository: InMemoryQuestionsAttachmentRepository
 let sut: GetQuestionBySlugUseCase
 
 describe('Get question by slug', () => {
     beforeEach(() => {
-        inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
+        inMemoryQuestionsAttachmentRepository = new InMemoryQuestionsAttachmentRepository()
+        inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionsAttachmentRepository)
         sut = new GetQuestionBySlugUseCase(inMemoryQuestionsRepository)
     })
 
@@ -26,5 +29,10 @@ describe('Get question by slug', () => {
         })
 
         expect(result.isRight()).toBe(true)
+        expect(result.value).toMatchObject({
+            question: expect.objectContaining({
+                title: newQuestion.title,
+            })
+        })
     })
 })
