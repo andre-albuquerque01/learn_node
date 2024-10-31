@@ -5,13 +5,17 @@ import { makeQuestion } from 'test/factories/make-question'
 import { DeleteQuestionUseCase } from './delete-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { NotAllowError } from './error/not-allow-error'
+import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-questions-attachment-repository'
+import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+    let inMemoryQuestionsAttachmentRepository: InMemoryQuestionsAttachmentRepository
 let sut: DeleteQuestionUseCase
 
 describe('Delete question', () => {
     beforeEach(() => {
-        inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
+        inMemoryQuestionsAttachmentRepository = new InMemoryQuestionsAttachmentRepository()
+        inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionsAttachmentRepository)
         sut = new DeleteQuestionUseCase(inMemoryQuestionsRepository)
     })
 
@@ -22,6 +26,17 @@ describe('Delete question', () => {
 
         await inMemoryQuestionsRepository.create(newQuestion)
 
+        inMemoryQuestionsAttachmentRepository.items.push(
+            makeQuestionAttachment({
+                questionId: newQuestion.id,
+                attachment: new UniqueEntityID('1')
+            }),
+            makeQuestionAttachment({
+                questionId: newQuestion.id,
+                attachment: new UniqueEntityID('2')
+            })
+        )
+
         await sut.execute({
             questionId: '1',
             authorId: '1',
@@ -30,6 +45,7 @@ describe('Delete question', () => {
         const question = await inMemoryQuestionsRepository.findById('1')
 
         expect(inMemoryQuestionsRepository.items).toHaveLength(0)
+        expect(inMemoryQuestionsAttachmentRepository.items).toHaveLength(0)
         expect(question).toEqual(null)
     })
 
@@ -39,7 +55,7 @@ describe('Delete question', () => {
         }, new UniqueEntityID('1'))
 
         await inMemoryQuestionsRepository.create(newQuestion)
-        
+
         const result = await sut.execute({
             questionId: '1',
             authorId: '2',
