@@ -2,7 +2,7 @@
 import { Either, left, right } from '@/core/either'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionRepository } from '../repositories/question-repository'
-import { ResourceNotFoundError } from './error/resource-not-found-error'
+import { ResourceNotFoundError } from '@/core/errors/error/resource-not-found-error'
 
 interface GetQuestionBySlugUseCaseRequest {
   slug: string
