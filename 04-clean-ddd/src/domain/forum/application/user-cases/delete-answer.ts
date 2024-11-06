@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Either, left, right } from '@/core/either'
 import { AnswersRepository } from '../repositories/answers-repository'
-import { NotAllowError } from './error/not-allow-error'
-import { ResourceNotFoundError } from './error/resource-not-found-error'
+import { NotAllowError } from '@/core/errors/error/not-allow-error'
+import { ResourceNotFoundError } from '@/core/errors/error/resource-not-found-error'
 
 interface DeleteAnswerUseCaseRequest {
   authorId: string
