@@ -6,7 +6,7 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { ChooseQuestionBestAnswerUseCase } from './choose-questin-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
-import { NotAllowError } from './error/not-allow-error'
+import { NotAllowError } from '@/core/errors/error/not-allow-error'
 import { InMemoryAnswersAttachmentRepository } from 'test/repositories/in-memory-answer-attachment-repository'
 import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-questions-attachment-repository'
 
