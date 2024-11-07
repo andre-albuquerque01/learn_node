@@ -1,0 +1,9 @@
+{
+    "extends": [
+        "@rocketseat/eslint-config/node"
+    ],
+    "rules": {
+        "no-new": "off",
+        "no-useless-constructor": "off"
+    }
+}
