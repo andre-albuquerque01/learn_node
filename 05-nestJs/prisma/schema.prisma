@@ -20,6 +20,7 @@ model User {
   role      UserRole   @default(STUDENT)
   questions Question[]
   answers   Answer[]
+  comments  Comment[]
 
   @@map("users")
 }
@@ -34,9 +35,11 @@ model Question {
   authorId     String
   bestAnswerId String?   @unique
 
-  author     User     @relation(fields: [authorId], references: [id])
-  bestAnswer Answer?  @relation("bestAnswer", fields: [bestAnswerId], references: [id])
+  author     User         @relation(fields: [authorId], references: [id])
+  bestAnswer Answer?      @relation("bestAnswer", fields: [bestAnswerId], references: [id])
   answers    Answer[]
+  comments   Comment[]
+  attachments Attachment[]
 
   @@map("questions")
 }
@@ -49,9 +52,42 @@ model Answer {
   authorId   String
   questionId String
 
-  author       User      @relation(fields: [authorId], references: [id])
-  bestAnswerOn Question? @relation("bestAnswer")
-  Question     Question  @relation(fields: [questionId], references: [id])
+  author       User         @relation(fields: [authorId], references: [id])
+  bestAnswerOn Question?    @relation("bestAnswer")
+  question     Question     @relation(fields: [questionId], references: [id])
+  comments     Comment[]
+  attachments   Attachment[]
 
   @@map("answers")
+}
+
+model Comment {
+  id         String    @id @default(uuid())
+  content    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  authorId   String
+  questionId String?
+  answerId   String?
+
+  author   User      @relation(fields: [authorId], references: [id])
+  question Question? @relation(fields: [questionId], references: [id])
+  answer   Answer?   @relation(fields: [answerId], references: [id])
+
+  @@map("comments")
+}
+
+model Attachment {
+  id    String @id @default(uuid())
+  title String
+  url   String
+  questionId String?
+  answerId   String?
+
+  question Question? @relation(fields: [questionId], references: [id])
+  answer   Answer?   @relation(fields: [answerId], references: [id])
+
+  postId String
+
+  @@map("attachments")
 }
