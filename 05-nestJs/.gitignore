@@ -395,6 +395,7 @@ Temporary Items
 =======
 # Local
 .env
+.env.test
 data
 dist
 .webpack
