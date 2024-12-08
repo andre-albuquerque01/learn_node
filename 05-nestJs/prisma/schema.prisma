@@ -35,10 +35,10 @@ model Question {
   authorId     String
   bestAnswerId String?   @unique
 
-  author     User         @relation(fields: [authorId], references: [id])
-  bestAnswer Answer?      @relation("bestAnswer", fields: [bestAnswerId], references: [id])
-  answers    Answer[]
-  comments   Comment[]
+  author      User         @relation(fields: [authorId], references: [id])
+  bestAnswer  Answer?      @relation("bestAnswer", fields: [bestAnswerId], references: [id])
+  answers     Answer[]
+  comments    Comment[]
   attachments Attachment[]
 
   @@map("questions")
@@ -56,7 +56,7 @@ model Answer {
   bestAnswerOn Question?    @relation("bestAnswer")
   question     Question     @relation(fields: [questionId], references: [id])
   comments     Comment[]
-  attachments   Attachment[]
+  attachments  Attachment[]
 
   @@map("answers")
 }
@@ -78,16 +78,16 @@ model Comment {
 }
 
 model Attachment {
-  id    String @id @default(uuid())
-  title String
-  url   String
+  id         String  @id @default(uuid())
+  title      String
+  url        String
   questionId String?
   answerId   String?
 
   question Question? @relation(fields: [questionId], references: [id])
   answer   Answer?   @relation(fields: [answerId], references: [id])
 
-  postId String
+  // postId String
 
   @@map("attachments")
 }
