@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-interface UploadParams {
+export interface UploadParams {
   fileName: string
   fileType: string
   body: Buffer
