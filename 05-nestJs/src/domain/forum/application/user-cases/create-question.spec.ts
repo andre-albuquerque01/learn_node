@@ -38,4 +38,22 @@ describe('create a question', () => {
       expect.objectContaining({ attachment: new UniqueEntityID('2') }),
     ])
   })
+
+  it('should persist attachments when creating a new question', async () => {
+    const result = await sut.execute({
+      authorId: '1',
+      title: 'New question',
+      content: "question's content",
+      attachmentsIds: ['1', '2'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionsAttachmentRepository.items).toHaveLength(2)
+    expect(inMemoryQuestionsAttachmentRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ attachment: new UniqueEntityID('1') }),
+        expect.objectContaining({ attachment: new UniqueEntityID('2') }),
+      ]),
+    )
+  })
 })
