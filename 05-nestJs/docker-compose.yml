@@ -9,6 +9,15 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: nest_clean
-    #   PGDATA: /data/postgres
-    # volumes:
-    #   - ./data/pg:/data/postgres
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/pg:/data/postgres
+
+  cache:
+    container_name: nest-clean-cache
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data
