@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/user-cases/choose-questin-best-answer'
+import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/user-cases/choose-question-best-answer'
 
 @Controller('/answers/:answerId/choose-as-best')
 export class ChooseQuestionBestAnswerController {
