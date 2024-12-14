@@ -10,7 +10,7 @@ import { AnswerFactory } from 'test/factories/make-answer'
 import { QuestionFactory } from 'test/factories/make-question'
 import { StudentFactory } from 'test/factories/make-student'
 
-describe('Edit answer (E2E)', () => {
+describe('Choose question best answer (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -51,7 +51,7 @@ describe('Edit answer (E2E)', () => {
     const answerId = answer.id.toString()
 
     const response = await request(app.getHttpServer())
-      .put(`/answers/${answerId}`)
+      .put(`/answers/${answerId}/choose-as-best`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         content: 'New answer content',
