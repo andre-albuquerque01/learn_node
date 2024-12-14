@@ -22,9 +22,8 @@ import { EditAnswerController } from './controllers/edit-answer.controller'
 import { DeleteAnswerController } from './controllers/delete-answer.controller'
 import { DeleteAnswerUseCase } from '@/domain/forum/application/user-cases/delete-answer'
 import { FetchQuestionAnswersController } from './controllers/fetch-question-answers.controller'
-import { FetchQuestionsAnswerUseCase } from '@/domain/forum/application/user-cases/fetch-questions-answer'
 import { ChooseQuestionBestAnswerController } from './controllers/choose-question-best-answer.controller'
-import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/user-cases/choose-questin-best-answer'
+import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/user-cases/choose-question-best-answer'
 import { CommentOnQuestionController } from './controllers/comment-on-question.controller'
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/user-cases/comment-on-question'
 import { DeleteQuestionCommentController } from './controllers/delete-question-comment.controller'
@@ -39,6 +38,9 @@ import { FetchAnswerCommentsUseCase } from '@/domain/forum/application/user-case
 import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 import { StorageModule } from '../storage/storage.module'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/user-cases/upload-and-create-attachment'
+import { FetchQuestionAnswerUseCase } from '@/domain/forum/application/user-cases/fetch-question-answer'
+import { ReadNotificationController } from './controllers/read-notification.controller'
+import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -62,6 +64,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use
     FetchQuestionCommentsController,
     FetchAnswerCommentsController,
     UploadAttachmentController,
+    ReadNotificationController,
   ],
   providers: [
     CreateQuestionUseCase,
@@ -74,7 +77,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use
     AnswerQuestionUseCase,
     EditQuestionUseCase,
     DeleteAnswerUseCase,
-    FetchQuestionsAnswerUseCase,
+    FetchQuestionAnswerUseCase,
     ChooseQuestionBestAnswerUseCase,
     CommentOnQuestionUseCase,
     DeleteQuestionCommentUseCase,
@@ -83,6 +86,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use
     FetchQuestionCommentsUseCase,
     FetchAnswerCommentsUseCase,
     UploadAndCreateAttachmentUseCase,
+    ReadNotificationUseCase,
   ],
 })
 export class HttpModule {}
