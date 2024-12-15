@@ -16,6 +16,7 @@ import { EditAnswerUseCase } from '@/domain/forum/application/user-cases/edit-an
   const editAnswerBodySchema = z.object({
     title: z.string(),
     content: z.string(),
+    attachments: z.array(z.string().uuid())
   })
   
   const bodyValidationPipe = new ZodValidationPipe(editAnswerBodySchema)
@@ -33,13 +34,13 @@ import { EditAnswerUseCase } from '@/domain/forum/application/user-cases/edit-an
       @CurrentUser() user: UserPayload,
       @Param('id') answerId: string,
     ) {
-      const {  content } = body
+      const {  content, attachments } = body
       const userId = user.sub
   
       const result = await this.editAnswer.execute({
         authorId: userId,
         content,
-        attachmentsIds: [],
+        attachmentsIds: attachments,
         answerId,
       })
   
