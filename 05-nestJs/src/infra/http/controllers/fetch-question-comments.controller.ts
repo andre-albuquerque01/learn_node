@@ -9,7 +9,7 @@ import {
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { FetchQuestionCommentsUseCase } from '@/domain/forum/application/user-cases/fetch-question-comment'
-import { CommentPresenter } from '../presenters/comment-presenter'
+import { CommentWithAuthorPresenter } from '../presenters/comment-with-author-presenter'
 
 const pageQueryParmasSchema = z
   .string()
@@ -42,8 +42,8 @@ export class FetchQuestionCommentsController {
       throw new BadRequestException()
     }
 
-    const questionsComment = result.value.questionsComment
+    const comments = result.value.comments
 
-    return { comments: questionsComment.map(CommentPresenter.toHTTP) }
+    return { comments: comments.map(CommentWithAuthorPresenter.toHTTP) }
   }
 }
