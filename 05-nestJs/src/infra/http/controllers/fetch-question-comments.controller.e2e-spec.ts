@@ -33,7 +33,9 @@ describe('Fetch question comment (E2E)', () => {
   })
 
   test.skip('[GET] /questions/:questionId/comments', async () => {
-    const user = await studentFactory.makePrismaStudent()
+    const user = await studentFactory.makePrismaStudent({
+      name: 'John Doe',
+    })
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
@@ -52,11 +54,6 @@ describe('Fetch question comment (E2E)', () => {
         questionId: question.id,
         content: 'New comment 2',
       }),
-      questionCommentFactory.makePrismaQuestionComment({
-        authorId: user.id,
-        questionId: question.id,
-        content: 'New comment 3',
-      }),
     ])
 
     const questionId = question.id.toString()
@@ -70,7 +67,12 @@ describe('Fetch question comment (E2E)', () => {
     expect(response.body).toEqual({
       comments: expect.arrayContaining([
         expect.objectContaining({
-          content: expect.any(String),
+          content: 'New comment 1',
+          authorName: 'John Doe',
+        }),
+        expect.objectContaining({
+          content: 'New comment 2',
+          authorName: 'John Doe',
         }),
       ]),
     })
