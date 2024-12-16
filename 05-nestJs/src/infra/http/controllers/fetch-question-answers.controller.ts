@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchQuestionsAnswerUseCase } from '@/domain/forum/application/user-cases/fetch-questions-answer'
+import { FetchQuestionAnswerUseCase } from '@/domain/forum/application/user-cases/fetch-question-answer'
 import { AnswerPresenter } from '../presenters/answer-presenter'
 
 const pageQueryParmasSchema = z
@@ -24,7 +24,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParmasSchema>
 
 @Controller('/questions/:questionId/answers')
 export class FetchQuestionAnswersController {
-  constructor(private fetchQuestionAnswers: FetchQuestionsAnswerUseCase) {}
+  constructor(private fetchQuestionAnswers: FetchQuestionAnswerUseCase) {}
 
   @Get()
   async handle(
