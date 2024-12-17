@@ -6,8 +6,6 @@ export class AnswerPresenter {
     return {
       id: answer.id.toString(),
       content: answer.content,
-    //   authorId: answer.authorId.toString(),
-    //   questionId: answer.questionId.toString(),
       createdAt: answer.createdAt,
       updatedAt: answer.updatedAt,
     }
