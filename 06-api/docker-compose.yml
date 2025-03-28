@@ -1,0 +1,14 @@
+services:
+  postgres:
+    container_name: node
+    image: postgres
+    ports:
+      - 5432:5432
+    # restart: always
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: node-review
+      PGDATA: /data/postgres
+    # volumes:
+    #   - ./data/pg:/data/postgres
