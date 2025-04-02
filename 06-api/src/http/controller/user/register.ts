@@ -20,7 +20,8 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
         const registerService = makeUserRegisterFactory()
 
         const user = await registerService.execute(data)
-        reply.status(201).send(user)
+        
+        return reply.status(201).send(user)
     } catch (error) {
         return reply.status(400).send({
             error: error instanceof Error ? error.message : "Erro desconhecido.",
