@@ -6,7 +6,8 @@ export async function getAllUsers(request: FastifyRequest, reply: FastifyReply) 
         const getAllUserService = makeUserGetAllFactory()
 
         const user = await getAllUserService.execute()
-        reply.status(200).send(user)
+
+        return reply.status(200).send(user)
     } catch (err) {
         reply.status(400).send({ message: 'Error' })
     }
