@@ -13,3 +13,7 @@
   - Sistema parecido com gympass para fazer o controle de alunos e acesso a varias academias
 
 - 04 criação de api com clean DDD
+
+- 05 criação de api com nest.js
+
+- 06 criação de api com fastify com solid
