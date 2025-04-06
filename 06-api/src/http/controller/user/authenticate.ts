@@ -26,7 +26,7 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
             },
         })
 
-        return reply.status(201).send({ token })
+        return reply.status(200).send({ token })
     } catch (error) {
         return reply.status(400).send({
             error: error instanceof Error ? error.message : "Erro desconhecido.",
