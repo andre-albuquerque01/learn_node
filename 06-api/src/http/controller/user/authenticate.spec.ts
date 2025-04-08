@@ -1,7 +1,7 @@
 import request from 'supertest'
 import { app } from '@/app'
-import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
-import { randomBytes } from 'crypto'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import { randomUUID } from 'node:crypto'
 
 describe('Authenticate (e2e)', () => {
     beforeAll(async () => {
@@ -13,18 +13,20 @@ describe('Authenticate (e2e)', () => {
     })
 
     it('should be able to authenticate', async () => {
-        const randm = randomBytes(10)
+        const email = `user-${randomUUID()}@example.com`
+
         await request(app.server)
-            .post('/users')
+            .post('/register')
             .send({
                 name: 'John Doe',
-                email: `johndoeq${randm}@example.com`,
-                password: 'password123',
+                email,
+                password: '@passWorda123',
             })
+
         const response = await request(app.server)
             .post('/sessions')
             .send({
-                email: `johndoeq${randm}@example.com`,
+                email,
                 password: '@passWorda123',
             })
 
