@@ -14,7 +14,7 @@ describe('Get by id user (e2e)', () => {
 
     it('should be able to get by id user', async () => {
         const user = await request(app.server)
-            .post('/users')
+            .post('/register')
             .send({
                 name: 'John Doe',
                 email: 'johndoe@example.com',
