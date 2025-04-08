@@ -9,10 +9,6 @@ import { getByIdUser } from "./get-by-id-user";
 import { deleteByIdUser } from "./delete-by-id-user";
 
 export async function userRoutes(app: FastifyInstance) {
-    app.get('/users', async (req, res) => {
-        res.send({ message: 'Hello from users route' })
-    })
-
     app.post('/register', register)
     app.post('/sessions', authenticate)
     app.put('/update', { onRequest: [verifyJWT] }, update)
