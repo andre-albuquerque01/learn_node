@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Update (e2e)', () => {
+describe('Update user (e2e)', () => {
     beforeAll(async () => {
         await app.ready()
     })
@@ -19,10 +19,10 @@ describe('Update (e2e)', () => {
             .put('/update')
             .set('Authorization', `Bearer ${token}`)
             .send({
-                email: 'johndoe5@example.com',
-                password: 'password123',
+                name: 'Updated Name',
+                password: 'passwordTesteTeste1223@',
             })
 
-        expect(response.status).toBe(201)
+        expect(response).toBe(201)
     })
 })
